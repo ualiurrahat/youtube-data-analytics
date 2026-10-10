@@ -20,30 +20,30 @@
 
 **What this project does:** It analyses YouTube's trending videos from **10 countries** and **user comments** on US trending videos. It measures how viewers feel (sentiment, emojis), which content categories earn attention versus engagement, and how countries differ.
 
-**Decision it informs:** Where a brand should place content for *awareness* (reach) versus *interaction* (engagement), and whether one global content strategy is enough or local ones are needed.
+**Decision it informs:** Where a brand should place content for _awareness_ (reach) versus _interaction_ (engagement), and whether one global content strategy is enough or local ones are needed.
 
 **Target audience:** Marketing managers, content strategists and media agency analysts.
 
 ## 🎯 Business Questions
 
-| # | Question | Method |
-|---|----------|--------|
-| 1 | How do viewers feel about trending videos, and how do they express it? | VADER sentiment analysis, emoji frequency analysis |
-| 2 | Which categories capture the most attention, and which engage viewers best? | Engagement-rate metric, treemap, box plot |
-| 3 | How do countries differ in engagement and in what trends? | Multi-country comparison, category-mix heatmap |
-| 4 | Do videos with more positive comments also earn higher engagement? | Join of comments to videos, Spearman correlation |
+| #   | Question                                                                    | Method                                             |
+| --- | --------------------------------------------------------------------------- | -------------------------------------------------- |
+| 1   | How do viewers feel about trending videos, and how do they express it?      | VADER sentiment analysis, emoji frequency analysis |
+| 2   | Which categories capture the most attention, and which engage viewers best? | Engagement-rate metric, treemap, box plot          |
+| 3   | How do countries differ in engagement and in what trends?                   | Multi-country comparison, category-mix heatmap     |
+| 4   | Do videos with more positive comments also earn higher engagement?          | Join of comments to videos, Spearman correlation   |
 
 ## 🏗️ Data Architecture & Tech Stack
 
 ### Data provenance
 
-| Item | Detail |
-|------|--------|
-| **Source** | Kaggle: [Trending YouTube Video Statistics](https://www.kaggle.com/datasets/datasnaek/youtube-new) |
-| **Period** | Late 2017 to mid 2018 (daily trending lists) |
-| **Videos** | One CSV per country: CA, DE, FR, GB, IN, JP, KR, MX, RU, US |
-| **Comments** | `UScomments.csv`: a sample of comments on US trending videos |
-| **Categories** | One `*_category_id.json` per country that maps `category_id` to a name |
+| Item            | Detail                                                                                                                             |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| **Source**      | Kaggle: [Trending YouTube Video Statistics](https://www.kaggle.com/datasets/datasnaek/youtube-new)                                 |
+| **Period**      | Late 2017 to mid 2018 (daily trending lists)                                                                                       |
+| **Videos**      | One CSV per country: CA, DE, FR, GB, IN, JP, KR, MX, RU, US                                                                        |
+| **Comments**    | `UScomments.csv`: a sample of comments on US trending videos                                                                       |
+| **Categories**  | One `*_category_id.json` per country that maps `category_id` to a name                                                             |
 | **Key columns** | `video_id`, `trending_date`, `category_id`, `views`, `likes`, `dislikes`, `comment_count`, `comments_disabled`, `ratings_disabled` |
 
 ### Pipeline
@@ -61,14 +61,14 @@ flowchart LR
 
 ### Tech stack and why
 
-| Tool | Why it was chosen |
-|------|-------------------|
-| **pandas, NumPy** | Fast, vectorised cleaning and aggregation for 300k+ rows |
-| **NLTK VADER** | Built for short, informal social-media text and needs no training data |
-| **emoji** | Detects complete emojis (flags, skin tones, multi-part emojis), not just single characters |
-| **matplotlib, seaborn, squarify** | Static, consistent charts that render directly on GitHub and export as PNG |
-| **SQLAlchemy + SQLite** | Shows the cleaned data can be stored in and queried from a database with SQL |
-| **Jupyter Notebook** | Combines code, explanation and results in one readable document |
+| Tool                              | Why it was chosen                                                                          |
+| --------------------------------- | ------------------------------------------------------------------------------------------ |
+| **pandas, NumPy**                 | Fast, vectorised cleaning and aggregation for 300k+ rows                                   |
+| **NLTK VADER**                    | Built for short, informal social-media text and needs no training data                     |
+| **emoji**                         | Detects complete emojis (flags, skin tones, multi-part emojis), not just single characters |
+| **matplotlib, seaborn, squarify** | Static, consistent charts that render directly on GitHub and export as PNG                 |
+| **SQLAlchemy + SQLite**           | Shows the cleaned data can be stored in and queried from a database with SQL               |
+| **Jupyter Notebook**              | Combines code, explanation and results in one readable document                            |
 
 ## 🔍 Key Insights
 
@@ -99,14 +99,6 @@ flowchart LR
 ![Engagement by country](visuals/07_engagement_by_country.png)
 ![Category mix by country](visuals/08_category_mix_by_country.png)
 
-### 4. Comment sentiment and engagement
-
-- Comments are friendliest on **[Category]** videos.
-- The Spearman correlation between a video's average comment sentiment and its engagement rate is **[+/-0.XX]**, which indicates **[little / a weak / a moderate]** relationship.
-
-![Sentiment by category](visuals/09_sentiment_by_category.png)
-![Sentiment vs engagement](visuals/10_sentiment_vs_engagement.png)
-
 ### Business recommendations
 
 1. **Separate awareness goals from interaction goals.** Choose the category by what the campaign needs: reach or reaction.
@@ -120,7 +112,7 @@ This project started from a guided course. The parts below are my own additions 
 - **Per-video snapshots to avoid double-counting.** Views, likes and comments are running totals, so a video that trends for five days would be counted five times. I keep each video's highest-view day, so every metric comes from one moment.
 - **Honest engagement metric.** Videos with ratings or comments switched off show zero likes or comments for reasons unrelated to the audience. I excluded them from engagement while keeping them in reach.
 - **10-country comparison.** I added a `country` column when loading the files, which makes country-level engagement and category-mix analysis possible.
-- **Sentiment joined to engagement.** I linked comment sentiment to video-level engagement, by category and as a correlation test.
+
 - **Data-quality logging.** Every cleaning step reports how many rows it changed, and unmapped categories are flagged instead of silently dropped.
 - **Reproducible and accessible.** Fixed random seeds, relative paths, a colour-blind-safe palette and charts saved automatically for this README.
 - **Multi-format export.** A seeded sample is saved as CSV, JSON and a SQLite database, and read back with a SQL query.
@@ -172,10 +164,10 @@ python -m notebook
 
 **Outputs created by the run**
 
-| Folder | Contents |
-|--------|----------|
+| Folder            | Contents                                                                              |
+| ----------------- | ------------------------------------------------------------------------------------- |
 | `data/processed/` | `youtube_sample.csv`, `youtube_sample.json`, `youtube_sample.sqlite` (table `videos`) |
-| `visuals/` | The 10 chart images used in this README |
+| `visuals/`        | The 10 chart images used in this README                                               |
 
 ## 🗂️ Repository Structure
 
@@ -195,6 +187,7 @@ youtube-data-analytics/
 
 **Limitations**
 
+- **Comment sentiment could not be linked to video engagement.** Too few comments match the trending-video table, so that analysis was not reported.
 - **Trending videos only.** The findings describe videos that already trended, not YouTube as a whole.
 - **A 2017-2018 snapshot.** Platform behaviour and audiences have changed since.
 - **VADER reads English best.** Other languages, sarcasm and slang are often scored as neutral.
