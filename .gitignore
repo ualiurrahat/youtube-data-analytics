@@ -218,3 +218,7 @@ __marimo__/
 .streamlit/secrets.toml
 data/raw/*.csv
 data/raw/additional_data/*.csv
+
+# Temporary sample files for code review
+samples/
+samples.zip
