@@ -1,0 +1,9 @@
+pandas>=2.2
+numpy>=1.26
+matplotlib>=3.8
+seaborn>=0.13
+squarify>=0.4.3
+nltk>=3.8
+emoji>=2.10
+sqlalchemy>=2.0
+notebook>=7.0
